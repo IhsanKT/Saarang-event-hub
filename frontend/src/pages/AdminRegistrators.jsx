@@ -16,7 +16,7 @@ function AdminRegistrators() {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch(`http://localhost:5000/api/events/${id}`);
+        const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}`);
         if (!res.ok) throw new Error('Failed to fetch event');
         const data = await res.json();
         setEvent(data);

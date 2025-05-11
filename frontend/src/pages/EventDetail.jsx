@@ -15,7 +15,7 @@ function EventDetail() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/events/${id}`);
+        const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}`);
         if (!res.ok) throw new Error('Event not found');
         const data = await res.json();
         setEvent(data);
@@ -46,7 +46,7 @@ function EventDetail() {
     setRegError('');
     setRegLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${id}/register`, {
+      const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ function EventDetail() {
     setRegError('');
     setRegLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${id}/unregister`, {
+      const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}/unregister`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

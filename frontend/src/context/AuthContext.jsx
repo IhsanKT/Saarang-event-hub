@@ -71,7 +71,10 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password })
     });
-    if (!res.ok) throw new Error('Signup failed');
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Signup failed');
+    }
     const data = await res.json();
     setToken(data.token);
   };

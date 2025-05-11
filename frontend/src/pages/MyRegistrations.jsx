@@ -14,7 +14,7 @@ function MyRegistrations() {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch('http://localhost:5000/api/users/registrations', {
+        const res = await fetch('https://saarang-event-hub.onrender.com/api/users/registrations', {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Failed to fetch registrations');
@@ -32,7 +32,7 @@ function MyRegistrations() {
   const handleUnregister = async (eventId) => {
     setUnregLoading((prev) => ({ ...prev, [eventId]: true }));
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${eventId}/unregister`, {
+      const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${eventId}/unregister`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

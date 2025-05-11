@@ -18,7 +18,7 @@ function Login() {
     try {
       if (email === 'admin@saarang.com') {
         // Admin login
-        const res = await fetch('https://saarang-event-hub.onrender.com/api/admin/login', {
+        const res = await fetch('http://localhost:5000/api/admin/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })

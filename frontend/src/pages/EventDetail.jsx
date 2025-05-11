@@ -15,7 +15,7 @@ function EventDetail() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}`);
+        const res = await fetch(`http://localhost:5000/api/events/${id}`);
         if (!res.ok) throw new Error('Event not found');
         const data = await res.json();
         setEvent(data);
@@ -26,17 +26,19 @@ function EventDetail() {
       }
     };
     fetchEvent();
+    // Make fetchEvent available for handleRegister
+    EventDetail.fetchEvent = fetchEvent;
   }, [id]);
 
   const isRegistered = () => {
     if (!event || !token) return false;
-    // Check if current user is in attendees (by user id in JWT)
-    // For now, just check if attendees array includes a userId from token
-    // But we don't decode userId from token here, so registration status will be checked after registration/unregistration
-    // For a real app, decode userId from token and compare
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      return event.attendees.includes(payload.userId);
+      console.log('Attendees:', event.attendees);
+      console.log('UserId:', payload.userId);
+      // Try to handle both array of objects and array of strings
+      const attendeeIds = event.attendees.map(a => a._id || a);
+      return attendeeIds.includes(payload.userId);
     } catch {
       return false;
     }
@@ -46,14 +48,18 @@ function EventDetail() {
     setRegError('');
     setRegLoading(true);
     try {
-      const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}/register`, {
+      const res = await fetch(`http://localhost:5000/api/events/${id}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!res.ok) throw new Error('Registration failed');
+      if (!res.ok) {
+        // If already registered, fetch latest event data to update UI
+        await EventDetail.fetchEvent();
+        throw new Error('Registration failed');
+      }
       const data = await res.json();
       setEvent(data);
     } catch (err) {
@@ -67,7 +73,7 @@ function EventDetail() {
     setRegError('');
     setRegLoading(true);
     try {
-      const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${id}/unregister`, {
+      const res = await fetch(`http://localhost:5000/api/events/${id}/unregister`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

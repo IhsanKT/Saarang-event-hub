@@ -21,7 +21,7 @@ function AdminDashboard() {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch('https://saarang-event-hub.onrender.com/api/events');
+        const res = await fetch('http://localhost:5000/api/events');
         if (!res.ok) throw new Error('Failed to fetch events');
         const data = await res.json();
         setEvents(data);
@@ -44,8 +44,8 @@ function AdminDashboard() {
     setFormLoading(true);
     try {
       const url = editId
-        ? `https://saarang-event-hub.onrender.com/api/events/${editId}`
-        : 'https://saarang-event-hub.onrender.com/api/events';
+        ? `http://localhost:5000/api/events/${editId}`
+        : 'http://localhost:5000/api/events';
       const method = editId ? 'PUT' : 'POST';
       const res = await fetch(url, {
         method,
@@ -86,7 +86,7 @@ function AdminDashboard() {
   const handleDelete = async (eventId) => {
     if (!window.confirm('Are you sure you want to delete this event?')) return;
     try {
-      const res = await fetch(`https://saarang-event-hub.onrender.com/api/events/${eventId}`, {
+      const res = await fetch(`http://localhost:5000/api/events/${eventId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${adminToken}`,

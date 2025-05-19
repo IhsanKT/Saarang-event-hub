@@ -12,7 +12,7 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ message: 'Invalid admin credentials' });
   }
   if (password !== process.env.ADMIN_PASSWORD) {
-    return res.status(401).json({ message: 'Invalid admin credentials' });
+    return res.status(401).json({ message: 'Invalid admin credentials fuck you' });
   }
   const token = jwt.sign({ email, isAdmin: true }, process.env.JWT_SECRET, { expiresIn: '1d' });
   res.json({ token });

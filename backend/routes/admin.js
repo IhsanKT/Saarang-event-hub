@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   if (email !== process.env.ADMIN_EMAIL) {
-    return res.status(401).json({ message: 'Invalid admin credentials' });
+    return res.status(401).json({ message: 'Invalid admin credentials stfu' });
   }
   if (password !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ message: 'Invalid admin credentials fuck you' });

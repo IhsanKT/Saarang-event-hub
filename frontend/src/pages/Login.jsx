@@ -16,7 +16,7 @@ function Login() {
     setError('');
     setLoading(true);
     try {
-      if (email === 'admin@saarang.com') {
+      if (email === process.env.ADMIN_EMAIL) {
         // Admin login
         const res = await fetch('https://saarang-event-hub.onrender.com/api/admin/login', {
           method: 'POST',
